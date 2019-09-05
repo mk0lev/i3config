@@ -159,19 +159,24 @@ bar {
 
 new_window none 
 
-# Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 2 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 2 # decrease screen brightness
+# Screen brightness controls
+bindsym $mod+k exec true $(pkexec /usr/bin/brillo -equ 100000 -A 3)
+bindsym $mod+j exec true $(pkexec /usr/bin/brillo -equ 100000 -U 3)
+bindsym XF86MonBrightnessUp exec true $(pkexec /usr/bin/brillo -equ 100000 -A >
+bindsym XF86MonBrightnessDown exec true $(pkexec /usr/bin/brillo -equ 100000 ->
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec pactl -- set-sink-volume 1 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec pactl -- set-sink-volume 1 -5% #decrease sound volume
+bindsym XF86AudioRaiseVolume exec amixer sset 'Master' 5%+ #increase sound vol>
+bindsym XF86AudioLowerVolume exec amixer sset 'Master' 5%- #decrease sound vol>
+#bindsym $mod+h exec amixer sset 'Master' 5%-
+#bindsym $mod+l exec amixer sset 'Master' 5%+
+
 
 # Redshift (warmth of screen colors, gamma)
 exec redshift &
 
 # US,DE,BG layouts
-exec setxkbmap -layout "us,de,bg" -variant ",qwerty,phonetic" && setxkbmap -option "grp:lalt_lshift_toggle"
+exec setxkbmap -layout "us,de,bg" -variant ",qwerty,phonetic" && setxkbmap -op>
 
 # NetworkManager tray icon
 exec nm-applet
@@ -193,3 +198,10 @@ exec --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Betterlockscreen Lock Screen
 bindsym $mod+shift+x exec betterlockscreen -l blur
+
+# Second monitor position
+exec xrandr --output DP-0 --primary
+exec xrandr --output VGA-0 --right-of DP-0
+
+workspace 1 output DP-0
+workspace 2 output VGA-0
